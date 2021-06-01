@@ -1,0 +1,36 @@
+.form {
+  width: 800px;
+  margin: 0 auto;
+  border: 1px solid black;
+  padding: 50px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btn-container {
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.phase-top {
+  justify-content: space-around;
+  padding-bottom: 25px;
+}
+
+.phase-top > div {
+  flex-grow: 0;
+  background-color: white;
+  color: black;
+  padding: 5px 15px;
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
+div.active {
+  color: white;
+  background-color: #007bff;
+}
+
+.arrow {
+  font-size: 30px;
+  color: #007bff;
+}
