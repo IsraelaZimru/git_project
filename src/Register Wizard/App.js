@@ -1,5 +1,5 @@
 import Page1 from './components/phase_1.js'
-import Page2 from './components/phase_2.js'
+import Page2 from './components/Page2.js'
 import Page3 from './components/phase_3.js'
 import {
     BrowserRouter as Router,
