@@ -1,6 +1,6 @@
 import Page2 from "./components/Page2.js";
 import Page1 from "./components/Page1.js";
-import Page3 from "./components/phase_3.js";
+import Page3 from "./components/Page3";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import HomePage from "./components/HomePage.js";
