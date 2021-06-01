@@ -23,7 +23,8 @@ function Page3() {
       validtion: {
         isInVaild: false,
         required: true,
-        regex: /^(https:\/\/)[a-zA-Z0-9/.-]+\.(png|jpeg|jpg)/,
+        regex:
+          /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
         costumeError: "invalid image url",
       },
     },
@@ -190,10 +191,11 @@ function Page3() {
         <Link to="/phase_2">
           <FontAwesomeIcon className="arrow" icon={faArrowCircleLeft} />
         </Link>
-
-        <Button variant="primary" type="submit" disabled={btnDisabled}>
-          Submit
-        </Button>
+        <Link to="/parsonal_page">
+          <Button variant="primary" type="submit" disabled={btnDisabled}>
+            Submit
+          </Button>
+        </Link>
       </Row>
     </Form>
   );
