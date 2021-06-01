@@ -1,7 +1,7 @@
 import Page2 from "./components/Page2.js";
 import Page1 from "./components/Page1.js";
 import Page3 from "./components/Page3";
-
+import ParsonalPage from "./components/ParsonalPage";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import HomePage from "./components/HomePage.js";
 
@@ -22,6 +22,9 @@ function App() {
         </Route>
         <Route exact path="/phase_3">
           <Page3 />
+        </Route>
+        <Route exact path="/parsonal_page">
+          <ParsonalPage />
         </Route>
       </Switch>
     </Router>
