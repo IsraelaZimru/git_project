@@ -7,8 +7,8 @@ import {
   faArrowCircleLeft,
   faArrowCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-
+import { Link, useHistory } from "react-router-dom";
+import checkpPreviousPages from "./checkpPreviousPages";
 function Page2() {
   const [errorCity, setErrorCity] = useState("");
   const [errorStreet, setErrorStreet] = useState("");
@@ -16,14 +16,16 @@ function Page2() {
   const [street, setStreet] = useState("");
   const [number, setNumber] = useState("");
   const [rhigt, setRhigt] = useState(false);
+  let histoy = useHistory();
 
   useEffect(() => {
+    checkpPreviousPages(histoy, "phase1");
     if (localStorage.getItem("phase2")) {
       const states = JSON.parse(localStorage.getItem("phase2"));
       setCity(states.city);
       setStreet(states.street);
       setNumber(states.number);
-      setRhigt(states.rhigt);
+      setRhigt(!states.isDisabled);
     }
   }, []);
 
@@ -49,14 +51,14 @@ function Page2() {
         break;
     }
 
-    let booleanRhigt = city && street ? true : false;
-    setRhigt(booleanRhigt);
+    let booleanRhigt = city && street ? false : true;
+    setRhigt(!booleanRhigt);
     const phase2 = {};
 
     phase2["city"] = city;
     phase2["street"] = street;
     phase2["number"] = number;
-    phase2["rhigt"] = booleanRhigt;
+    phase2["isDisabled"] = booleanRhigt;
 
     localStorage.setItem("phase2", JSON.stringify(phase2));
   }
