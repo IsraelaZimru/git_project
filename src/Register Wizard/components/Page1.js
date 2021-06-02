@@ -28,8 +28,7 @@ function Page1() {
       pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       error: [],
     },
-    birthday: { valid: true, error: [], myvalue: "", required: true },
-    // birthday: { valid: false, error: [], pattern: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/ }
+    birthday: { valid: false, error: [], myvalue: "", required: true },
   });
   const [btnDisable, setBtnDisable] = useState(true);
   const [phase1, setPhase1] = useState({});
@@ -64,57 +63,31 @@ function Page1() {
     }
   }, []);
 
-  const updatePhase1 = () => {
+  const updatePhase1 = (isDisabled) => {
     const newObj = {
       lastName: data.lastName.myvalue,
       firstName: data.firstName.myvalue,
       email: data.email.myvalue,
       birthday: data.birthday.myvalue,
-      isDisabled: false,
+      isDisabled: isDisabled,
     };
-    console.log(newObj);
+
     localStorage.setItem("phase1", JSON.stringify(newObj));
   };
-
-  function isValid(e) {
-    e.preventDefault();
-  }
 
   function updateValue({ name, value }) {
     let newValid = false;
     let errorLst = [];
-    // if (value === "") {
-    //     errorLst.push(`please enter ${name}`)
-    // } else if ((data[name].pattern).test(value)) {
-    //     newValid = true;
-    //     console.log(value);
-    // }
-    // else {
-    //     errorLst.push(`${name} not valid`)
-    // }
 
     if (value === "") {
       errorLst.push(`please enter ${name}`);
-    } else if (name === "birthday") {
+    } else if (data[name].pattern && data[name].pattern.test(value)) {
       newValid = true;
-    } else if (data[name].pattern.test(value)) {
+    } else if (value && name === "birthday") {
       newValid = true;
-      console.log(value);
     } else {
       errorLst.push(`${name} not valid`);
     }
-    console.log(value);
-    // if (value === "") {
-    //     errorLst.push(`please enter ${name}`)
-    // } else if (name === "birthday") {
-    //     newValid = true;
-    // } else if ((data[name].pattern).test(value)) {
-    //     newValid = true;
-    //     console.log(newValid);
-    // }
-    // else {
-    //     errorLst.push(`${name} not valid`)
-    // }
 
     const temp = {
       ...data,
@@ -139,15 +112,14 @@ function Page1() {
         }
       }
     }
-    if (isDisabled === false) {
-      updatePhase1();
-    }
+
+    updatePhase1(isDisabled);
     setBtnDisable(isDisabled);
   }
 
   return (
     <Container>
-      <Form onSubmit={(e) => isValid(e)} className="form">
+      <Form className="form">
         <Row className="phase-top">
           <Col className="active">1</Col>
           <Col>2</Col>

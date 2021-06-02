@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import "./page3.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleLeft,
@@ -12,7 +12,7 @@ import {
   faDrum,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-
+import checkpPreviousPages from "./checkpPreviousPages";
 function Page3() {
   const [btnDisabled, setbtnDisabled] = useState(true);
 
@@ -37,21 +37,19 @@ function Page3() {
       },
     },
   });
+  let histoy = useHistory();
 
   useEffect(() => {
-    if (localStorage.getItem("phase3Inputs")) {
-      const inputsPhase3Local = JSON.parse(
-        localStorage.getItem("phase3Inputs")
-      );
+    checkpPreviousPages(histoy, "phase1", "phase2");
+    if (localStorage.getItem("phase3")) {
+      const inputsPhase3Local = JSON.parse(localStorage.getItem("phase3"));
+
       for (const key in inputsPhase3Local) {
         if (key in inputsValidtion) {
           inputsValidtion[key].value = inputsPhase3Local[key];
         }
-        if (inputsPhase3Local[key].value) {
-          validtion({ name: key, value: inputsPhase3Local[key].value });
-        }
       }
-      setbtnDisabled(inputsPhase3Local.submitDisabled);
+      setbtnDisabled(inputsPhase3Local.isDisabled);
       setInputsValidtion({
         ...inputsValidtion,
       });
@@ -89,7 +87,7 @@ function Page3() {
       submitDisabled = false;
     }
     const phase3Inputs = {};
-    phase3Inputs["submitDisabled"] = submitDisabled;
+    phase3Inputs["isDisabled"] = submitDisabled;
     for (const key in inputsValidtion) {
       if (inputsValidtion[key].value) {
         phase3Inputs[key] = inputsValidtion[key].value;
@@ -97,7 +95,7 @@ function Page3() {
     }
     setbtnDisabled(submitDisabled);
 
-    localStorage.setItem("phase3Inputs", JSON.stringify(phase3Inputs));
+    localStorage.setItem("phase3", JSON.stringify(phase3Inputs));
   }
 
   function inputsOnChange({ value, name }) {
@@ -110,16 +108,8 @@ function Page3() {
     });
   }
 
-  function onSubmit(e) {
-    e.preventDefault();
-  }
   return (
-    <Form
-      className="form"
-      onSubmit={(e) => {
-        onSubmit(e);
-      }}
-    >
+    <Form className="form">
       <Row className="phase-top">
         <Col>1</Col>
         <Col>2</Col>
